@@ -32,5 +32,5 @@ def urlencode(params: dict = None) -> str:
 def get(url, params=None, **kw):
     if params:
         url = url.rstrip('?') + '?' + urlencode(params)#, doseq=True)
-    print(url)
+
     return requests.get(url, **kw)
