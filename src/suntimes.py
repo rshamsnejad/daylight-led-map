@@ -1,11 +1,5 @@
 from apikeys.apiverve import *
-import urequests
-from urllib.parse import urlencode
-
-def get(url, params=None, **kw):
-    if params:
-        url = url.rstrip('?') + '?' + urlencode(params, doseq=True)
-    return urequests.get(url, **kw)
+from rude_http import get
 
 url = "https://api.apiverve.com/v1/sunrisesunset"
 
@@ -19,4 +13,3 @@ response = get(url, headers=headers, params=querystring)
 
 print(response.json())
 	
-							
