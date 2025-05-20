@@ -11,7 +11,7 @@ GPIO_DIN = 2
 np = neopixel.NeoPixel(machine.Pin(GPIO_DIN), NUM_LEDS)
 
 for i in range(NUM_LEDS-1, -1, -1):
-    print(f"Lighting up LED {i}")
-    np[i] = (255, 0, 0)
+    # print(f"Lighting up LED {i}")
+    np[i] = (244, 233, 155)
     np.write()
-    time.sleep(0.5)
+    time.sleep(0.1)
