@@ -18,7 +18,8 @@
       "rotate": 90,
       "attrs": {
         "rows": "24",
-        "cols": "1"
+        "cols": "1",
+        "pixelate": "circle"
       }
     }
   ],
@@ -26,7 +27,7 @@
     ["esp:TX", "$serialMonitor:RX", "", []],
     ["esp:RX", "$serialMonitor:TX", "", []],
     ["esp:GND.1", "strip:VSS", "black", ["h-15", "v10"]],
-    ["esp:3V3.1", "strip:VDD", "red", ["h-20", "v0"]],
+    ["esp:5V.1", "strip:VDD", "red", ["h-20", "v0"]],
     ["esp:2", "strip:DIN", "green", ["h-10", "v0"]]
   ],
   "dependencies": {}
