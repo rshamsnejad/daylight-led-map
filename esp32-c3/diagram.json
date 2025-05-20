@@ -2,7 +2,32 @@
   "version": 1,
   "author": "Uri Shaked",
   "editor": "wokwi",
-  "parts": [ { "type": "board-esp32-c3-devkitm-1", "id": "esp", "top": -72.1, "left": 139, "attrs": {} } ],
-  "connections": [ [ "esp:TX", "$serialMonitor:RX", "", [] ], [ "esp:RX", "$serialMonitor:TX", "", [] ] ],
+  "parts": [
+    {
+      "type": "board-esp32-c3-devkitm-1",
+      "id": "esp",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-neopixel-canvas",
+      "id": "strip",
+      "top": -300,
+      "left": 300,
+      "rotate": 90,
+      "attrs": {
+        "rows": "24",
+        "cols": "1"
+      }
+    }
+  ],
+  "connections": [
+    ["esp:TX", "$serialMonitor:RX", "", []],
+    ["esp:RX", "$serialMonitor:TX", "", []],
+    ["esp:GND.1", "strip:VSS", "black", ["h-15", "v10"]],
+    ["esp:3V3.1", "strip:VDD", "red", ["h-20", "v0"]],
+    ["esp:2", "strip:DIN", "green", ["h-10", "v0"]]
+  ],
   "dependencies": {}
 }
