@@ -1,7 +1,3 @@
-# Dummy library for testing purposes
-from customprint import customprint
-customprint("Importing libraries works!")
-
 # https://docs.micropython.org/en/latest/esp8266/tutorial/neopixel.html
 import machine
 import neopixel
