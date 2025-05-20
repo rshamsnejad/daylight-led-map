@@ -24,11 +24,18 @@ try:
 except:
     print("Unable to retrieve NTP time!")
 
-print(f"Current local time: {time.localtime()}")
-print(get_suntime(lat='36.7201600', lon='-4.4203400', date='05-20-2025'))
+utc_time = time.gmtime()
+utc_time_string = f"{utc_time[0]}-{utc_time[1]:0>2}-{utc_time[2]:0>2}T{utc_time[3]:0>2}:{utc_time[4]:0>2}:{utc_time[5]:0>2}"
+print(f"Current UTC time: {utc_time_string}")
 
-for i in range(NUM_LEDS-1, -1, -1):
-    # print(f"Lighting up LED {i}")
-    np[i] = SUNLIGHT_RGB
-    np.write()
-    time.sleep(0.1)
+utc_date_us = f"{utc_time[1]:0>2}-{utc_time[2]:0>2}-{utc_time[0]}"
+suntime = get_suntime(lat='0', lon='0', date=utc_date_us)
+noon = suntime['data']['solarNoon'].split('.')[0]
+# print(suntime)
+print(f"Noon at selected location: {noon}")
+
+# for i in range(NUM_LEDS-1, -1, -1):
+#     # print(f"Lighting up LED {i}")
+#     np[i] = SUNLIGHT_RGB
+#     np.write()
+#     time.sleep(0.1)
