@@ -10,6 +10,8 @@ GPIO_DIN = 2
 
 np = neopixel.NeoPixel(machine.Pin(GPIO_DIN), NUM_LEDS)
 
+import wokwi_wifi
+
 try:
     ntptime.settime()
 except:
