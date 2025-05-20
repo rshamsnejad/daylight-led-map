@@ -1,6 +1,11 @@
-import requests
-from pprint import pprint
 from apikeys.apiverve import *
+import urequests
+from urllib.parse import urlencode
+
+def get(url, params=None, **kw):
+    if params:
+        url = url.rstrip('?') + '?' + urlencode(params, doseq=True)
+    return urequests.get(url, **kw)
 
 url = "https://api.apiverve.com/v1/sunrisesunset"
 
@@ -10,8 +15,8 @@ headers = {
 	"x-api-key": apiverve_key
 }
 
-response = requests.get(url, headers=headers, params=querystring)
+response = get(url, headers=headers, params=querystring)
 
-pprint(response.json())
+print(response.json())
 	
 							
