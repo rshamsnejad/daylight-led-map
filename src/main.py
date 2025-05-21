@@ -38,10 +38,10 @@ utc_tuple = time.gmtime()
 utc_time = Timedate()
 utc_time.set_timedate_ints(utc_tuple[0], utc_tuple[1], utc_tuple[2], utc_tuple[3], utc_tuple[4], utc_tuple[5])
 
-utc_date_us = f"{utc_time.get_date_ints()[1]:0>2}-{utc_time.get_date_ints()[2]:0>2}-{utc_time.get_date_ints()[0]}"
-utc_suntime = get_suntime(lat='0', lon='0', date=utc_date_us)
+today_us_format = f"{utc_time.get_date_ints()[1]:0>2}-{utc_time.get_date_ints()[2]:0>2}-{utc_time.get_date_ints()[0]}"
+suntime_api_response = get_suntime(lat='0', lon='0', date=today_us_format)
 
-utc = {
+suntime = {
     "dawn":    Timedate(),
     "sunrise": Timedate(),
     "noon":    Timedate(),
@@ -50,35 +50,29 @@ utc = {
     "night":   Timedate()
 }
 
-utc['dawn'].set_timedate_string(utc_suntime['data']['dawn'])
-utc['sunrise'].set_timedate_string(utc_suntime['data']['sunrise'])
-utc['noon'].set_timedate_string(utc_suntime['data']['solarNoon'])
-utc['dusk'].set_timedate_string(utc_suntime['data']['dusk'])
-utc['sunset'].set_timedate_string(utc_suntime['data']['sunset'])
-utc['night'].set_timedate_string(utc_suntime['data']['night'])
+suntime['dawn'].set_timedate_string(suntime_api_response['data']['dawn'])
+suntime['sunrise'].set_timedate_string(suntime_api_response['data']['sunrise'])
+suntime['noon'].set_timedate_string(suntime_api_response['data']['solarNoon'])
+suntime['dusk'].set_timedate_string(suntime_api_response['data']['dusk'])
+suntime['sunset'].set_timedate_string(suntime_api_response['data']['sunset'])
+suntime['night'].set_timedate_string(suntime_api_response['data']['night'])
 
-
-current_times = []
-suntimes = []
-colors = []
 i = 0
 for offset in TIMEZONE_OFFSETS:
        
-    current_times.append(utc_time.add_hour(offset))
+    current_time = utc_time.add_hour(offset)
 
-    if   utc['dawn'] <= current_times[-1] and current_times[-1] < utc['sunrise']:
-        colors.append(SUNLIGHT_RGB['dawn'])
-    elif utc['sunrise'] <= current_times[-1] and current_times[-1] < utc['noon']:
-        colors.append(SUNLIGHT_RGB['morning'])
-    elif utc['noon'] <= current_times[-1] and current_times[-1] < utc['dusk']:
-        colors.append(SUNLIGHT_RGB['afternoon'])
-    elif utc['dusk'] <= current_times[-1] and current_times[-1] < utc['sunset']:
-        colors.append(SUNLIGHT_RGB['dusk'])
+    if   suntime['dawn'] <= current_time and current_time < suntime['sunrise']:
+        np[i] = SUNLIGHT_RGB['dawn']
+    elif suntime['sunrise'] <= current_time and current_time < suntime['noon']:
+        np[i] = SUNLIGHT_RGB['morning']
+    elif suntime['noon'] <= current_time and current_time < suntime['dusk']:
+        np[i] = SUNLIGHT_RGB['afternoon']
+    elif suntime['dusk'] <= current_time and current_time < suntime['sunset']:
+        np[i] = SUNLIGHT_RGB['dusk']
     else:
-        colors.append(SUNLIGHT_RGB['night'])
+        np[i] = SUNLIGHT_RGB['night']
     
-    # print(current_times[-1])
-    # print(colors[-1])
-    np[i] = colors[-1]
-    i += 1
     np.write()
+
+    i += 1
