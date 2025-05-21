@@ -27,18 +27,20 @@ try:
 except:
     print("Unable to retrieve NTP time!")
 
-utc_time = time.gmtime()
-utc_time_string = f"{utc_time[0]}-{utc_time[1]:0>2}-{utc_time[2]:0>2}T{utc_time[3]:0>2}:{utc_time[4]:0>2}:{utc_time[5]:0>2}"
-print(f"Current UTC time: {utc_time_string}")
+utc_tuple = time.gmtime()
+utc_time = Timedate()
+utc_time.set_timedate_ints(utc_tuple[0], utc_tuple[1], utc_tuple[2], utc_tuple[3], utc_tuple[4], utc_tuple[5])
 
-utc_date_us = f"{utc_time[1]:0>2}-{utc_time[2]:0>2}-{utc_time[0]}"
+print(f"Current UTC time: {utc_time}")
+
+utc_date_us = f"{utc_time.get_date_ints()[1]:0>2}-{utc_time.get_date_ints()[2]:0>2}-{utc_time.get_date_ints()[0]}"
 utc_suntime = get_suntime(lat='0', lon='0', date=utc_date_us)
-utc_noon_string = utc_suntime['data']['solarNoon'].split('.')[0]
-# print(suntime)
-print(f"UTC Solar Noon: {utc_noon_string}")
 
-utc_time = Timedate(utc_time_string)
-utc_noon = Timedate(utc_noon_string)
+utc_noon = Timedate()
+utc_noon.set_timedate_string(utc_suntime['data']['solarNoon'])
+
+print(f"UTC Solar Noon: {utc_noon}")
+
 print(utc_time > utc_noon)
 
 # for i in range(NUM_LEDS-1, -1, -1):
