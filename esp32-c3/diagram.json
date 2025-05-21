@@ -14,8 +14,8 @@
       "type": "wokwi-neopixel-canvas",
       "id": "strip",
       "top": -300,
-      "left": 300,
-      "rotate": 90,
+      "left": -320,
+      "rotate": -90,
       "attrs": {
         "rows": "24",
         "cols": "1",
