@@ -13,6 +13,7 @@ NUM_LEDS = 24
 GPIO_DIN = 2
 SUNLIGHT_RGB = (244, 233, 155)
 TIMEZONE_OFFSETS = list(range(-11, 13))
+TIMEZONE_LONGITUDES = [i * (360/NUM_LEDS) for i in TIMEZONE_OFFSETS]
 UTC_INDEX = TIMEZONE_OFFSETS.index(0)
 
 np = neopixel.NeoPixel(machine.Pin(GPIO_DIN), NUM_LEDS)
@@ -42,6 +43,14 @@ utc_noon.set_timedate_string(utc_suntime['data']['solarNoon'])
 print(f"UTC Solar Noon: {utc_noon}")
 
 print(utc_time > utc_noon)
+
+timezones = []
+for offset in TIMEZONE_OFFSETS:
+       
+    timezones.append(utc_time.add_hour(offset))
+
+    print(timezones[-1])
+
 
 # for i in range(NUM_LEDS-1, -1, -1):
 #     # print(f"Lighting up LED {i}")

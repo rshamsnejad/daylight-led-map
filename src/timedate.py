@@ -26,15 +26,15 @@ class Timedate:
 
     def _set_date_ints(self, year: int, month: int, day: int):
 
-        if month <= 0 or day <= 0:
-            raise ValueError("Invalid integer input")
+        # if month <= 0 or day <= 0:
+        #     raise ValueError("Invalid integer input")
 
         self.date_array = [year, month, day]
 
     def _set_time_ints(self, hour: int, minute: int, second: int):
 
-        if hour < 0 or minute < 0 or second < 0:
-            raise ValueError("Invalid integer input")
+        # if hour < 0 or minute < 0 or second < 0:
+        #     raise ValueError("Invalid integer input")
 
         self.time_array = [hour, minute, second]
 
@@ -62,7 +62,7 @@ class Timedate:
         self.date_string = f"{self.date_array[0]}-{self.date_array[1]:0>2}-{self.date_array[2]:0>2}"
     
     def _set_time_string_from_ints(self) -> None:
-        self.time_string = f"{self.time_array[0]}:{self.time_array[1]:0>2}:{self.time_array[2]:0>2}"
+        self.time_string = f"{self.time_array[0]:0>2}:{self.time_array[1]:0>2}:{self.time_array[2]:0>2}"
 
     def _set_timedate_string_from_strings(self) -> None:
         self.timedate_string = f"{self.date_string}T{self.time_string}"
@@ -93,53 +93,96 @@ class Timedate:
         return self.timedate == other.timedate
     
     def __gt__(self, other: Timedate):
-        if self.timedate['second'] < other.timedate['second']:
-            if self.timedate['minute'] < other.timedate['minute']:
-                if self.timedate['hour'] < other.timedate['hour']:
-                    if self.timedate['day'] < other.timedate['day']:
-                        if self.timedate['month'] < other.timedate['month']:
-                            if self.timedate['year'] > other.timedate['year']:
+        if self.timedate['year'] > other.timedate['year']:
+            return True
+        elif self.timedate['year'] < other.timedate['year']:
+            return False
+        else:
+            if self.timedate['month'] > other.timedate['month']:
+                return True
+            elif self.timedate['month'] < other.timedate['month']:
+                return False
+            else:
+                if self.timedate['day'] > other.timedate['day']:
+                    return True
+                elif self.timedate['day'] < other.timedate['day']:
+                    return False
+                else:
+                    if self.timedate['hour'] > other.timedate['hour']:
+                        return True
+                    elif self.timedate['hour'] < other.timedate['hour']:
+                        return False
+                    else:
+                        if self.timedate['minute'] > other.timedate['minute']:
+                            return True
+                        elif self.timedate['minute'] < other.timedate['minute']:
+                            return False
+                        else:
+                            if self.timedate['second'] > other.timedate['second']:
                                 return True
+                            elif self.timedate['second'] < other.timedate['second']:
+                                return False
                             else:
                                 return False
-                        else:
-                            return False
-                    else:
-                        return False
-                else:
-                    return False
-            else:
-                return False
-        else:
-            return False
     
     def __le__(self, other):
-        return not self.__gt__(self, other)
+        return not self.__gt__(other)
     
     def __lt__(self, other: Timedate):
-        if self.timedate['second'] > other.timedate['seconds']:
-            if self.timedate['minute'] > other.timedate['minutes']:
-                if self.timedate['second'] > other.timedate['seconds']:
-                    if self.timedate['day'] > other.timedate['day']:
-                        if self.timedate['month'] > other.timedate['month']:
-                            if self.timedate['year'] < other.timedate['year']:
+        if self.timedate['year'] < other.timedate['year']:
+            return True
+        elif self.timedate['year'] > other.timedate['year']:
+            return False
+        else:
+            if self.timedate['month'] < other.timedate['month']:
+                return True
+            elif self.timedate['month'] > other.timedate['month']:
+                return False
+            else:
+                if self.timedate['day'] < other.timedate['day']:
+                    return True
+                elif self.timedate['day'] > other.timedate['day']:
+                    return False
+                else:
+                    if self.timedate['hour'] < other.timedate['hour']:
+                        return True
+                    elif self.timedate['hour'] > other.timedate['hour']:
+                        return False
+                    else:
+                        if self.timedate['minute'] < other.timedate['minute']:
+                            return True
+                        elif self.timedate['minute'] > other.timedate['minute']:
+                            return False
+                        else:
+                            if self.timedate['second'] < other.timedate['second']:
                                 return True
+                            elif self.timedate['second'] > other.timedate['second']:
+                                return False
                             else:
                                 return False
-                        else:
-                            return False
-                    else:
-                        return False
-                else:
-                    return False
-            else:
-                return False
-        else:
-            return False
-    
+
     def __ge__(self, other):
-        return not self.__lt__(self, other)
+        return not self.__lt__(other)
     
     def __str__(self):
         return self.timedate_string
 
+    def add_hour(self, hour: int) -> Timedate:
+        hour_sum = self.get_time_ints()[0] + hour
+
+        if hour_sum >= 24:
+            hour_sum -= 24
+        elif hour_sum < 0:
+            hour_sum += 24
+
+        temp = Timedate()
+        temp.set_timedate_ints(
+            self.get_date_ints()[0],
+            self.get_date_ints()[1],
+            self.get_date_ints()[2],
+            hour_sum,
+            self.get_time_ints()[1],
+            self.get_time_ints()[2]
+        )
+
+        return temp
