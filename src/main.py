@@ -44,12 +44,18 @@ print(f"UTC Solar Noon: {utc_noon}")
 
 print(utc_time > utc_noon)
 
-timezones = []
+current_times = []
 for offset in TIMEZONE_OFFSETS:
        
-    timezones.append(utc_time.add_hour(offset))
+    current_times.append(utc_time.add_hour(offset))
 
-    print(timezones[-1])
+    print(current_times[-1])
+
+timezone_solar_data = []
+for longitude in TIMEZONE_LONGITUDES:
+    timezone_solar_data.append(get_suntime(lat='80', lon=f"{longitude}", date=utc_date_us))
+
+    print(timezone_solar_data[-1])
 
 
 # for i in range(NUM_LEDS-1, -1, -1):
