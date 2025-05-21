@@ -5,12 +5,15 @@ import time
 import ntptime
 from suntimes import get_suntime
 from wokwi_wifi import connect_wokwi_wifi
+from timedate import Timedate
 
 
 
 NUM_LEDS = 24
 GPIO_DIN = 2
 SUNLIGHT_RGB = (244, 233, 155)
+TIMEZONE_OFFSETS = list(range(-11, 13))
+UTC_INDEX = TIMEZONE_OFFSETS.index(0)
 
 np = neopixel.NeoPixel(machine.Pin(GPIO_DIN), NUM_LEDS)
 
@@ -29,13 +32,18 @@ utc_time_string = f"{utc_time[0]}-{utc_time[1]:0>2}-{utc_time[2]:0>2}T{utc_time[
 print(f"Current UTC time: {utc_time_string}")
 
 utc_date_us = f"{utc_time[1]:0>2}-{utc_time[2]:0>2}-{utc_time[0]}"
-suntime = get_suntime(lat='0', lon='0', date=utc_date_us)
-noon = suntime['data']['solarNoon'].split('.')[0]
+utc_suntime = get_suntime(lat='0', lon='0', date=utc_date_us)
+utc_noon_string = utc_suntime['data']['solarNoon'].split('.')[0]
 # print(suntime)
-print(f"Noon at selected location: {noon}")
+print(f"UTC Solar Noon: {utc_noon_string}")
+
+utc_time = Timedate(utc_time_string)
+utc_noon = Timedate(utc_noon_string)
+print(utc_time > utc_noon)
 
 # for i in range(NUM_LEDS-1, -1, -1):
 #     # print(f"Lighting up LED {i}")
 #     np[i] = SUNLIGHT_RGB
 #     np.write()
 #     time.sleep(0.1)
+
