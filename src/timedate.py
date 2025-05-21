@@ -15,14 +15,14 @@ class Timedate:
         self.time_string = self.timedate_string.split('T')[1]
 
     def _set_date_ints_from_string(self):
-        date_split = int(self.date_string.split('-'))
+        date_split = self.date_string.split('-')
 
-        self._set_date_ints(date_split[0], date_split[1], date_split[2])
+        self._set_date_ints(int(date_split[0]), int(date_split[1]), int(date_split[2]))
     
     def _set_time_ints_from_string(self):
-        time_split = int(self.time_string.split(':'))
+        time_split = self.time_string.split(':')
 
-        self._set_time_ints(time_split[0], time_split[1], time_split[2])
+        self._set_time_ints(int(time_split[0]), int(time_split[1]), int(time_split[2]))
 
     def _set_date_ints(self, year: int, month: int, day: int):
 
