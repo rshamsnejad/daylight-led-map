@@ -11,7 +11,13 @@ from timedate import Timedate
 
 NUM_LEDS = 24
 GPIO_DIN = 2
-SUNLIGHT_RGB = (244, 233, 155)
+SUNLIGHT_RGB = {
+    "dawn":      (102,150,186),
+    "morning":   (226,227,139),
+    "afternoon": (231,165,83),
+    "dusk":      (126,75,104),
+    "night":     (41,41,101)
+}
 TIMEZONE_OFFSETS = list(range(-11, 13))
 TIMEZONE_LONGITUDES = [i * (360/NUM_LEDS) for i in TIMEZONE_OFFSETS]
 UTC_INDEX = TIMEZONE_OFFSETS.index(0)
@@ -32,35 +38,47 @@ utc_tuple = time.gmtime()
 utc_time = Timedate()
 utc_time.set_timedate_ints(utc_tuple[0], utc_tuple[1], utc_tuple[2], utc_tuple[3], utc_tuple[4], utc_tuple[5])
 
-print(f"Current UTC time: {utc_time}")
-
 utc_date_us = f"{utc_time.get_date_ints()[1]:0>2}-{utc_time.get_date_ints()[2]:0>2}-{utc_time.get_date_ints()[0]}"
 utc_suntime = get_suntime(lat='0', lon='0', date=utc_date_us)
 
-utc_noon = Timedate()
-utc_noon.set_timedate_string(utc_suntime['data']['solarNoon'])
+utc = {
+    "dawn":    Timedate(),
+    "sunrise": Timedate(),
+    "noon":    Timedate(),
+    "dusk":    Timedate(),
+    "sunset":  Timedate(),
+    "night":   Timedate()
+}
 
-print(f"UTC Solar Noon: {utc_noon}")
+utc['dawn'].set_timedate_string(utc_suntime['data']['dawn'])
+utc['sunrise'].set_timedate_string(utc_suntime['data']['sunrise'])
+utc['noon'].set_timedate_string(utc_suntime['data']['solarNoon'])
+utc['dusk'].set_timedate_string(utc_suntime['data']['dusk'])
+utc['sunset'].set_timedate_string(utc_suntime['data']['sunset'])
+utc['night'].set_timedate_string(utc_suntime['data']['night'])
 
-print(utc_time > utc_noon)
 
 current_times = []
+suntimes = []
+colors = []
+i = 0
 for offset in TIMEZONE_OFFSETS:
        
     current_times.append(utc_time.add_hour(offset))
 
-    print(current_times[-1])
-
-timezone_solar_data = []
-for longitude in TIMEZONE_LONGITUDES:
-    timezone_solar_data.append(get_suntime(lat='80', lon=f"{longitude}", date=utc_date_us))
-
-    print(timezone_solar_data[-1])
-
-
-# for i in range(NUM_LEDS-1, -1, -1):
-#     # print(f"Lighting up LED {i}")
-#     np[i] = SUNLIGHT_RGB
-#     np.write()
-#     time.sleep(0.1)
-
+    if   utc['dawn'] <= current_times[-1] and current_times[-1] < utc['sunrise']:
+        colors.append(SUNLIGHT_RGB['dawn'])
+    elif utc['sunrise'] <= current_times[-1] and current_times[-1] < utc['noon']:
+        colors.append(SUNLIGHT_RGB['morning'])
+    elif utc['noon'] <= current_times[-1] and current_times[-1] < utc['dusk']:
+        colors.append(SUNLIGHT_RGB['afternoon'])
+    elif utc['dusk'] <= current_times[-1] and current_times[-1] < utc['sunset']:
+        colors.append(SUNLIGHT_RGB['dusk'])
+    else:
+        colors.append(SUNLIGHT_RGB['night'])
+    
+    # print(current_times[-1])
+    # print(colors[-1])
+    np[i] = colors[-1]
+    i += 1
+    np.write()
