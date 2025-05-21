@@ -1,0 +1,1 @@
+python -m mpremote connect port:/dev/ttyACM0 mip install neopixel

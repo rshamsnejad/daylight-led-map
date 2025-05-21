@@ -4,7 +4,8 @@ import neopixel
 import time
 import ntptime
 from suntimes import get_suntime
-from wokwi_wifi import connect_wokwi_wifi
+from wifi import connect_wifi
+from secrets.home_wifi import home_wifi
 from timedate import Timedate
 
 
@@ -25,14 +26,17 @@ UTC_INDEX = TIMEZONE_OFFSETS.index(0)
 np = neopixel.NeoPixel(machine.Pin(GPIO_DIN), NUM_LEDS)
 
 try:
-    connect_wokwi_wifi()
-except:
+    # connect_wifi('Wokwi-GUEST', '')
+    connect_wifi(home_wifi['ssid'], home_wifi['password'])
+except Exception as e:
     print("Unable to connect to internet!")
+    print(e)
 
 try:
     ntptime.settime()
-except:
+except Exception as e:
     print("Unable to retrieve NTP time!")
+    print(e)
 
 utc_tuple = time.gmtime()
 utc_time = Timedate()

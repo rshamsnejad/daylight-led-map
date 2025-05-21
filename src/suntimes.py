@@ -1,4 +1,4 @@
-from apikeys.apiverve import *
+from secrets.apiverve import *
 from rude_http import get
 
 
