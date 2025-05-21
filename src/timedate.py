@@ -1,13 +1,5 @@
 class Timedate:
 
-    def __init__(self, iso_date: str) -> None:
-
-        self.set_timedate_string(iso_date)
-        
-    def __init__(self, year: int, month: int, day: int, hour: int, minute: int, second: int) -> None:
-        
-        self.set_timedate_ints(year, month, day, hour, minute, second)
-    
     def set_timedate_string(self, iso_date: str):
         self.timedate_string = iso_date.split('.')[0]
         self._set_date_string_from_timedate_string()
