@@ -13,17 +13,24 @@ from timedate import Timedate
 NUM_LEDS = 24
 GPIO_DIN = 2
 SUNLIGHT_RGB = {
-    "dawn":      (102,150,186),
-    "morning":   (226,227,139),
-    "afternoon": (231,165,83),
-    "dusk":      (126,75,104),
-    "night":     (41,41,101)
+    "dawn":      (20,50,255,0),
+    "morning":   (255,100,0,0),
+    "afternoon": (255,50,0,0),
+    "dusk":      (200,20,120,0),
+    "night":     (0,0,255,0)                
+}
+SUNLIGHT_RGB = {
+    "dawn":      (2,5,25,0),
+    "morning":   (25,5,0,0),
+    "afternoon": (25,7,0,0),
+    "dusk":      (20,2,12,0),
+    "night":     (5,0,25,0)                
 }
 TIMEZONE_OFFSETS = list(range(-11, 13))
 TIMEZONE_LONGITUDES = [i * (360/NUM_LEDS) for i in TIMEZONE_OFFSETS]
 UTC_INDEX = TIMEZONE_OFFSETS.index(0)
 
-np = neopixel.NeoPixel(machine.Pin(GPIO_DIN), NUM_LEDS)
+np = neopixel.NeoPixel(machine.Pin(GPIO_DIN), NUM_LEDS, bpp=4)
 
 try:
     # connect_wifi('Wokwi-GUEST', '')
