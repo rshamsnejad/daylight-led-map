@@ -13,12 +13,12 @@
     {
       "type": "wokwi-neopixel-canvas",
       "id": "strip",
-      "top": -300,
-      "left": -320,
-      "rotate": -90,
+      "top": -400,
+      "left": -600,
+      "rotate": 0,
       "attrs": {
-        "rows": "24",
-        "cols": "1",
+        "rows": "16",
+        "cols": "32",
         "pixelate": "circle"
       }
     }
@@ -26,9 +26,9 @@
   "connections": [
     ["esp:TX", "$serialMonitor:RX", "", []],
     ["esp:RX", "$serialMonitor:TX", "", []],
-    ["esp:GND.1", "strip:VSS", "black", ["h-15", "v10"]],
-    ["esp:5V.1", "strip:VDD", "red", ["h-20", "v0"]],
-    ["esp:2", "strip:DIN", "green", ["h-10", "v0"]]
+    ["esp:GND.1", "strip:VSS", "black", []],
+    ["esp:5V.1", "strip:VDD", "red", []],
+    ["esp:2", "strip:DIN", "green", []]
   ],
   "dependencies": {}
 }
