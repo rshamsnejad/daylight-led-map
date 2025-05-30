@@ -1,4 +1,13 @@
-def xy_to_index(x: int, y: int, width: int=32, height: int=16, zigzag: bool=True, row_major: bool=True) -> int:
+def xy_to_index(
+        x: int,
+        y: int,
+        width: int      = 32,
+        height: int     = 16,
+        zigzag: bool    = True,
+        row_major: bool = True,
+        flip_x: bool    = False,
+        flip_y: bool    = False
+    ) -> int:
     """
     Convert (x, y) coordinate to NeoPixel index for a 32x16 matrix with zigzag wiring.
 
@@ -14,11 +23,13 @@ def xy_to_index(x: int, y: int, width: int=32, height: int=16, zigzag: bool=True
         int: The NeoPixel index (0-based).
     """
     
-    # Accept negative y values for convenience
-    y = abs(y)
-
-    if x < 0 or x >= width or y >= height:
+    if x < 0 or x >= width or y < 0 or y >= height:
         raise ValueError("x or y is out of bounds")
+
+    if flip_x:
+        x = width - 1 - x
+    if flip_y:
+        y = height - 1 - y
 
     if row_major:
         if zigzag:
