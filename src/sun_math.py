@@ -10,8 +10,10 @@ def sun_position(utc_timestamp):
         subsolar_lon (float): Subsolar point longitude in degrees
     """
     tm = time.gmtime(utc_timestamp)
-    N = tm.tm_yday
-    hour = tm.tm_hour + tm.tm_min / 60 + tm.tm_sec / 3600
+    # N = tm.tm_yday
+    N = tm[7]
+    # hour = tm.tm_hour + tm.tm_min / 60 + tm.tm_sec / 3600
+    hour = tm[3] + tm[4] / 60 + tm[5] / 3600
 
     # Fractional year in radians
     gamma = 2 * math.pi / 365 * (N - 1 + hour / 24)
