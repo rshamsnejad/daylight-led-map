@@ -16,7 +16,7 @@ def sun_position(utc_timestamp):
     subsolar_lon = (180 - (hour * 15 + EoT * 0.25)) % 360 - 180
     return delta, subsolar_lon
 
-def is_daytime(lat, lon, delta, lambda_s):
+def is_daytime(lon, lat, delta, lambda_s):
     """
     Determine if the (lat, lon) point is in daylight.
     """
@@ -36,7 +36,7 @@ lon_grid = np.linspace(-180, 180, 32)
 Lon, Lat = np.meshgrid(lon_grid, lat_grid)
 
 # Classify points as day or night
-day_night_mask = np.vectorize(lambda lat, lon: is_daytime(lat, lon, delta, lambda_s))(Lat, Lon)
+day_night_mask = np.vectorize(lambda lat, lon: is_daytime(lon, lat, delta, lambda_s))(Lat, Lon)
 
 # Convert radians to degrees for plotting
 Lat_deg = np.degrees(Lat)
