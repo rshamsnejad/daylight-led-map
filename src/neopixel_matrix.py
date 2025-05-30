@@ -49,3 +49,27 @@ def xy_to_index(
                 return x * height + (height - 1 - y)
         else:
             return x * height + y
+
+def xy_to_lonlat(x, y, width=32, height=16):
+    """
+    Converts x, y coordinates in an arbitrary range (0 to x_max, 0 to y_max)
+    to longitude and latitude using the Plate Carrée projection.
+
+    Parameters:
+        x (float or array-like): x-coordinate(s) in the range [0, x_max]
+        y (float or array-like): y-coordinate(s) in the range [0, y_max]
+        x_max (float): maximum value of x (corresponds to longitude 180°)
+        y_max (float): maximum value of y (corresponds to latitude 90°)
+
+    Returns:
+        tuple: (longitude, latitude)
+    """
+    # Normalize x and y to [0, 1]
+    x_norm = x / width
+    y_norm = y / height
+
+    # Map to longitude [-180, 180] and latitude [-90, 90]
+    lon = x_norm * 360.0 - 180.0
+    lat = y_norm * 180.0 - 90.0
+
+    return lon, lat
