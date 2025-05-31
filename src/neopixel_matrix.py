@@ -1,16 +1,15 @@
 def xy_to_index(
         x: int,
         y: int,
-        width: int      = 32,
-        height: int     = 16,
-        zigzag: bool    = True,
-        row_major: bool = True,
-        flip_x: bool    = False,
-        flip_y: bool    = False
+        width: int          = 32,
+        height: int         = 16,
+        zigzag: bool        = True,
+        row_major: bool     = True,
+        flip_x: bool        = False,
+        flip_y: bool        = False,
+        square_split: bool  = False
     ) -> int:
     """
-    Convert (x, y) coordinate to NeoPixel index for a 32x16 matrix with zigzag wiring.
-
     Args:
         x (int): X coordinate (0 to width-1).
         y (int): Y coordinate (0 to height-1).
@@ -25,30 +24,46 @@ def xy_to_index(
     
     if x < 0 or x >= width or y < 0 or y >= height:
         raise ValueError("x or y is out of bounds")
+    if square_split and width % 2 != 0:
+        raise ValueError("Invalid width for a square split")
 
     if flip_x:
         x = width - 1 - x
     if flip_y:
         y = height - 1 - y
+    
+    base = 0
+    offset = 0
+    compute_width = width
 
+    if square_split:
+
+        compute_width = int(width / 2)
+
+        if x >= width / 2:
+            offset = int((width * height) / 2)
+            x -= width
+    
     if row_major:
         if zigzag:
             if y % 2 == 0:
                 # Even rows go left to right
-                return y * width + x
+                base = y * compute_width + x
             else:
                 # Odd rows go right to left
-                return y * width + (width - 1 - x)
+                base = y * compute_width + (compute_width - 1 - x)
         else:
-            return y * width + x
+            base = y * compute_width + x
     else:
         if zigzag:
             if x % 2 == 0:
-                return x * height + y
+                base = x * height + y
             else:
-                return x * height + (height - 1 - y)
+                base = x * height + (height - 1 - y)
         else:
-            return x * height + y
+            base = x * height + y
+
+    return base + offset
 
 def xy_to_lonlat(x, y, width=32, height=16):
     """
