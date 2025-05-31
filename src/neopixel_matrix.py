@@ -41,7 +41,7 @@ def xy_to_index(
         compute_width = int(width / 2)
 
         if x >= width / 2:
-            offset = int((width * height) / 2)
+            offset = int((width * (height + 1)) / 2)
             x -= width
     
     if row_major:
