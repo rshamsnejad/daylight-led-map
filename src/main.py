@@ -38,7 +38,7 @@ np = neopixel.NeoPixel(machine.Pin(GPIO_DIN), NUM_LEDS)
 for y in range(HEIGHT):
     for x in range(WIDTH):
         lon, lat = xy_to_lonlat(x, y, width=WIDTH, height=HEIGHT)
-        index = xy_to_index(x, y, zigzag=False, flip_y=True, square_split=True)
+        index = xy_to_index(x, y, zigzag=False, flip_y=True, square_split_x=True)
         
         if is_daytime(lon, math.radians(lat), delta, lambda_s):
             np[index] = DAY

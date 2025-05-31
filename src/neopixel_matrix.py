@@ -7,7 +7,7 @@ def xy_to_index(
         row_major: bool     = True,
         flip_x: bool        = False,
         flip_y: bool        = False,
-        square_split: bool  = False
+        square_split_x: bool = False
     ) -> int:
     """
     Args:
