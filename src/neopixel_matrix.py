@@ -1,22 +1,27 @@
 def xy_to_index(
-        x: int,
-        y: int,
-        width: int          = 32,
-        height: int         = 16,
-        zigzag: bool        = True,
-        row_major: bool     = True,
-        flip_x: bool        = False,
-        flip_y: bool        = False,
+        x:              int,
+        y:              int,
+        width:          int  = 32,
+        height:         int  = 16,
+        zigzag:         bool = True,
+        row_major:      bool = True,
+        flip_x:         bool = False,
+        flip_y:         bool = False,
         square_split_x: bool = False
     ) -> int:
     """
+    Translates (X, Y) coordinates into Neopixel matrix index.
+
     Args:
-        x (int): X coordinate (0 to width-1).
-        y (int): Y coordinate (0 to height-1).
-        width (int): Matrix width. Default is 32.
-        height (int): Matrix height. Default is 16.
-        zigzag (bool): True if wired in zigzag, False if wired in progressive. Defaults to True.
-        row_major(bool): True if wired row by row, False if wired column by column. Defaults to True.
+        x              (int):  X coordinate (0 to width-1).
+        y              (int):  Y coordinate (0 to height-1).
+        width          (int):  Matrix width. Default is 32.
+        height         (int):  Matrix height. Default is 16.
+        zigzag         (bool): True if wired in zigzag, False if wired in progressive. Defaults to True.
+        row_major      (bool): True if wired row by row, False if wired column by column. Defaults to True.
+        flip_x         (bool): True if X-axis mirroring is needed, False otherwise. Defaults to False.
+        flip_y         (bool): True if Y-axis mirroring is needed, False otherwise. Defaults to False.
+        square_split_x (bool): True if the matrix is made of 2 parts along the X-axis, False otherwise. Defaults to False.
 
     Returns:
         int: The NeoPixel index (0-based).
@@ -24,7 +29,7 @@ def xy_to_index(
     
     if x < 0 or x >= width or y < 0 or y >= height:
         raise ValueError("x or y is out of bounds")
-    if square_split and width % 2 != 0:
+    if square_split_x and width % 2 != 0:
         raise ValueError("Invalid width for a square split")
 
     if flip_x:
@@ -36,7 +41,7 @@ def xy_to_index(
     offset = 0
     compute_width = width
 
-    if square_split:
+    if square_split_x:
 
         compute_width = int(width / 2)
 
