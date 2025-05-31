@@ -36,14 +36,14 @@
     }
   ],
   "connections": [
-    ["esp:TX", "$serialMonitor:RX", "", []],
-    ["esp:RX", "$serialMonitor:TX", "", []],
-    ["esp:GND.1", "matrix1:VSS", "black", []],
-    ["esp:GND.1", "matrix2:VSS", "black", []],
-    ["esp:5V.1", "matrix1:VDD", "red", []],
-    ["esp:5V.1", "matrix2:VDD", "red", []],
-    ["esp:2", "matrix1:DIN", "green", []],
-    ["matrix1:DOUT", "matrix2:DIN", "purple", ["*", "v10"]]
+    ["esp:TX",       "$serialMonitor:RX", "",       []],
+    ["esp:RX",       "$serialMonitor:TX", "",       []],
+    ["esp:GND.1",    "matrix1:VSS",       "black",  []],
+    ["esp:GND.1",    "matrix2:VSS",       "black",  []],
+    ["esp:5V.1",     "matrix1:VDD",       "red",    []],
+    ["esp:5V.1",     "matrix2:VDD",       "red",    []],
+    ["esp:2",        "matrix1:DIN",       "green",  []],
+    ["matrix1:DOUT", "matrix2:DIN",       "purple", ["*", "v10"]]
   ],
   "dependencies": {}
 }
