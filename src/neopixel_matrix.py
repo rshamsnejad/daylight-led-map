@@ -29,7 +29,7 @@ def xy_to_index(
     
     if x < 0 or x >= width or y < 0 or y >= height:
         raise ValueError("x or y is out of bounds")
-    if square_split_x and width % 2 != 0:
+    if square_split_x and width / 2 != height:
         raise ValueError("Invalid width for a square split")
 
     if flip_x:
@@ -41,13 +41,18 @@ def xy_to_index(
     offset = 0
     compute_width = width
 
+    # print(f"(x, y) = ({x}, {y})")
+
     if square_split_x:
 
         compute_width = int(width / 2)
 
         if x >= width / 2:
-            offset = int((width * (height + 1)) / 2)
-            x -= width
+            offset = int( (width * height) / 2 )
+            x -= int( (width / 2) )
+    
+    # print(f"offset = {offset}")
+    # print(f"(x, y) = ({x}, {y})")
     
     if row_major:
         if zigzag:
