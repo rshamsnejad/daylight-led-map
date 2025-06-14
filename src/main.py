@@ -6,6 +6,7 @@ import ntptime
 from wifi import connect_wifi
 from neopixel_matrix import xy_to_index, xy_to_lonlat
 from sun_math import sun_position, is_daytime
+from tm1637 import TM1637
 
 # MODE = "hardware"
 MODE = "simulation"
@@ -53,6 +54,11 @@ else:
 utc_now = time.time()
 print(time.gmtime(utc_now))
 print(time.localtime(utc_now))
+
+# Display time on TM1637 clock
+tm = TM1637(clk=machine.Pin(4), dio=machine.Pin(5))
+tm.numbers(time.gmtime(utc_now)[3], time.gmtime(utc_now)[4])
+
 # Calculate sun position
 delta, lambda_s = sun_position(utc_now)
 
