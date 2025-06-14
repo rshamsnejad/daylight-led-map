@@ -52,8 +52,8 @@
     ["matrix1:DOUT", "matrix2:DIN",       "purple", ["*", "v10"]],
     ["esp:5V.1",     "clock:VCC",         "red",    ["*", "h100"]],
     ["esp:GND.1",    "clock:GND",         "black",  ["*", "h110"]],
-    ["esp:19",       "clock:CLK",         "yellow", ["*", "h230"]],
-    ["esp:18",       "clock:DIO",         "green",  ["*", "h240"]]
+    ["esp:4",       "clock:CLK",         "yellow",  ["*", "h230"]],
+    ["esp:5",       "clock:DIO",         "green",   ["*", "h240"]]
   ],
   "dependencies": {}
 }
