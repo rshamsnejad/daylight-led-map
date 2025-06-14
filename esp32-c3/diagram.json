@@ -38,7 +38,10 @@
       "type": "wokwi-tm1637-7segment",
       "id": "clock",
       "top": 200,
-      "left": -300
+      "left": -300,
+      "attrs": {
+        "color": "blue"
+      }
     }
   ],
   "connections": [
