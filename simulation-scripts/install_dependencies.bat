@@ -1,1 +1,1 @@
-python -m mpremote connect port:rfc2217://localhost:4000 mip install neopixel github:mcauser/micropython-tm1637
+python -m mpremote connect port:rfc2217://localhost:4000 mip install neopixel github:mcauser/micropython-tm1637 github:mcauser/micropython-74hc595
